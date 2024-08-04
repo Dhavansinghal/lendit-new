@@ -14,7 +14,7 @@ export const metdata:Metadata={
   title:'Homework',
   description:'Testing and learning NextJs',
   icons:{
-    icon: '/icons/logo.svg'
+    icon: '/icon/logo.svg'
   }
 }
 
