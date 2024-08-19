@@ -5,7 +5,21 @@ import React from 'react'
 
 const Home = () => {
 
-  const loggedIn = {firstName : 'Dhavan', lastName:'Singhal', email: 'dhavansinghal@gmail.com'}
+  const loggedIn = {
+  $id: "string",
+  firstName : 'Dhavan', 
+  lastName:'Singhal',
+  email: 'dhavansinghal@gmail.com',
+  userId: "string",
+  dwollaCustomerUrl: "string",
+  dwollaCustomerId: "string",
+  address1: "string",
+  city: "string",
+  state: "string",
+  postalCode: "string",
+  dateOfBirth: "string",
+  ssn: ""
+}
 
   return (
     <section className='home'>
