@@ -29,7 +29,7 @@ const Home = () => {
             type='greeting'
             title='Welcome'
             user={loggedIn?.firstName || 'Guest'}
-            subtext = "Access and Manage Account and git"
+            subtext = "Access and Manage Accounts"
           />
 
           <TotalBalanceBox 
