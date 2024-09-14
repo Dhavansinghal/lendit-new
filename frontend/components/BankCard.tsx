@@ -23,11 +23,11 @@ const BankCard = ({account,userName,showBalance = true}:CreditCardProps) => {
                             {userName}
                         </h1>
                         <h2 className='text-12 font-semibold text-white'>
-                            **/** 
+                         ●● / ●●
                         </h2>
                     </div>
                     <p className='text-14 font-semibold tracking-[1.1px] text-white'>
-                        *** *** **** <span className='text-16'> $ {account.mask}</span>
+                    ●●●● ●●●● ●●●● <span className='text-16'> $ {account.mask}</span>
                     </p>
                 </article>
             </div>
@@ -54,6 +54,8 @@ const BankCard = ({account,userName,showBalance = true}:CreditCardProps) => {
                 className='absolute top-0 left-0'
             />
         </Link>
+
+        {/* Copy of card number */}
     </div>
   )
 }
