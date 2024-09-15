@@ -1,4 +1,5 @@
 'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import React, { useState } from 'react'
@@ -8,25 +9,22 @@ import { useForm } from "react-hook-form"
 import {z} from 'zod'
 import { Button } from "@/components/ui/button"
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+  Form
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import { Loader2 } from 'lucide-react'
-import { signUp } from '@/lib/action/user.action'
+import { getLoggedInUser, signIn, signUp } from '@/lib/action/user.action'
 import CustomInput from './CustomInput'
 import { authFormSchema } from '@/lib/utils'
+import { useRouter } from 'next/navigation';
 
 
 
 function AuthForm({type}:{type:string}) {
     const [user,setUser] = useState(null);
     const [IsLoading,setIsLoading] = useState(false);
+
+    const router = useRouter();
+
 
     const formSchema = authFormSchema(type);
     //1.Define your form.
@@ -43,12 +41,18 @@ function AuthForm({type}:{type:string}) {
         console.log(data);
         try{
             if(type === 'SignUp'){
-                // const newUser = await signUp(data);
-                // setUser(newUser);
+                const newUser = await signUp(data);
+                setUser(newUser);
             }
 
             if(type === 'SignIn'){
-                console.log(data);
+                const response = await signIn({
+                    email: data.email,
+                    password: data.password
+                });
+
+                if(response) router.push('/');
+
             }
         }
         catch (error){
@@ -78,7 +82,7 @@ function AuthForm({type}:{type:string}) {
             <div className='flex flex-col gap-1 md:gap-3'>
                 <h1 className='text-24 lg:text-36 font-semibold text-gray-900'>
                     {user 
-                    ? 'Link Accoun' 
+                    ? 'Link Account' 
                     : type === 'SignIn'
                         ?   'Sign In'
                         : 'Sign Up'
