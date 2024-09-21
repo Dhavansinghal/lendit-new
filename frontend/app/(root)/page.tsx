@@ -7,7 +7,6 @@ import React from 'react'
 const Home = async () => {
 
   const loggedIn = await getLoggedInUser();
-  console.log(loggedIn);
   
   return (
     <section className='home'>
