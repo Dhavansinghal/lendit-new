@@ -38,7 +38,7 @@ function AuthForm({type}:{type:string}) {
     //Define a submit handler.
     const onSubmit = async (data: z.infer<typeof formSchema>) => {
         setIsLoading(true);
-        console.log(data);
+
         try{
             if(type === 'SignUp'){
                 const newUser = await signUp(data);
