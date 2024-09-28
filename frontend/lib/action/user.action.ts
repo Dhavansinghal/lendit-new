@@ -5,7 +5,7 @@ import { createAdminClient, createSessionClient } from "../appwrite";
 import { cookies } from "next/headers";
 import { encryptId, extractCustomerIdFromUrl, parseStringify } from "../utils";
 import { plaidClient } from "../plaid";
-import { ProcessorTokenCreateRequest, ProcessorTokenCreateRequestProcessorEnum } from "plaid";
+import { CountryCode, ProcessorTokenCreateRequest, ProcessorTokenCreateRequestProcessorEnum, Products } from "plaid";
 import { revalidatePath } from "next/cache";
 import { addFundingSource, createDwollaCustomer } from "./dwolla.actions";
 
@@ -154,16 +154,17 @@ export const createLinkToken = async (user: User) => {
             user:{
                 client_user_id:user.$id 
             },
-            client_name : user.name,
+            client_name: `${user.firstName} ${user.lastName}`,
             products: ['auth'] as Products[],
             language:'en',
-            country_codes: ['US','IN'] as CountryCode[],
+            country_codes: ['US'] as CountryCode[],
         }
 
         const response = await plaidClient.linkTokenCreate(tokenParams);
         return parseStringify({linkToken:response.data.link_token});
     }
     catch (error) {
+        console.log("function name createLinkToken :")
         console.error(error);
     }
 }
@@ -243,6 +244,8 @@ export const exchangePublicToken = async ({publicToken,user}:exchangePublicToken
     
     }
     catch (error) {
+        console.log("function name exchangePublicToken :")
+
         console.error(error);
     }
 }
