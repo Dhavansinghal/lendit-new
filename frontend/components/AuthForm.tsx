@@ -16,6 +16,7 @@ import { getLoggedInUser, signIn, signUp } from '@/lib/action/user.action'
 import CustomInput from './CustomInput'
 import { authFormSchema } from '@/lib/utils'
 import { useRouter } from 'next/navigation';
+import PlaidLink from './PlaidLink'
 
 
 
@@ -41,7 +42,14 @@ function AuthForm({type}:{type:string}) {
 
         try{
             if(type === 'SignUp'){
-                const newUser = await signUp(data);
+                const userData = {
+                    firstName: data.firstName!,
+                    lastName: data.lastName!,
+                    email: data.email,
+                    password: data.password
+                }
+
+                const newUser = await signUp(userData);
                 setUser(newUser);
             }
 
@@ -96,11 +104,14 @@ function AuthForm({type}:{type:string}) {
                 </p>
             </div>
         </header>
-        {user ?
+        {/* {user ? */}
             <div className='flex flex-col gap-4'>
-            {/*something I have no funcking idea at this point */}
+            <PlaidLink
+                user={user}
+                variant="primary"
+            />
             </div>
-        : 
+        {/* :  */}
             <>
             <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -164,7 +175,7 @@ function AuthForm({type}:{type:string}) {
                     : 'Already have an account?'
                     }
                 </p>
-                <Link href={type ==='SignIn' ? '/sign-up' : '/sign-in'} className='form-link'>
+                <Link href={type ==='SignIn' ? '/SignUp' : '/SignIn'} className='form-link'>
                     {type ==='SignIn' ?
                     'Sign Up'
                     : 'Sign In'
@@ -173,7 +184,7 @@ function AuthForm({type}:{type:string}) {
             </footer>
 
             </>
-        }
+        {/* } */}
     </section>
   )
 }
