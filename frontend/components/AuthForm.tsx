@@ -104,14 +104,14 @@ function AuthForm({type}:{type:string}) {
                 </p>
             </div>
         </header>
-        {/* {user ? */}
+        {user ?
             <div className='flex flex-col gap-4'>
             <PlaidLink
                 user={user}
                 variant="primary"
             />
             </div>
-        {/* :  */}
+         :  
             <>
             <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -184,7 +184,7 @@ function AuthForm({type}:{type:string}) {
             </footer>
 
             </>
-        {/* } */}
+        } 
     </section>
   )
 }

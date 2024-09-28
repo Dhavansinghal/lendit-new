@@ -44,11 +44,11 @@ const PlaidLink = ({user,variant}:PlaidLinkProps) => {
             </Button>
         ): variant==='ghost' ? (
             <Button variant='ghost'>
-            Connect Bank
+            Connect ghost
             </Button>
         ):(
             <Button variant='outline'>
-            Connect Bank
+            Connect outline
             </Button>
         )}
     </>

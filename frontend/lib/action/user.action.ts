@@ -72,11 +72,11 @@ export const signUp = async ({ password, ...userData }: SignUpParams)=>{
         const newUserData = {
             firstName: userData.firstName!,
             lastName: userData.lastName!,
-            address1: "data.address1!",
-            city: "data.city!",
-            state: "data.state!",
-            postalCode: "data.postalCode!",
-            dateOfBirth: "16/05/1998",
+            address1: "Some Address",
+            city: "Gwalior",
+            state: "MP",
+            postalCode: "47622",
+            dateOfBirth: "1998-01-01",
             ssn: "123456789",
             email: userData.email
         }
