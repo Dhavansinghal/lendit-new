@@ -49,14 +49,20 @@ export const getAccounts = async ({ userId }: getAccountsProps) => {
           sharaebleId: bank.shareableId,
         };
 
+        console.log("Here is the accounts getAccounts ",account );
+
         return account;
       })
     );
+
+    console.log("Here is the accounts getAccounts ",accounts );
+
 
     const totalBanks = accounts.length;
     const totalCurrentBalance = accounts.reduce((total, account) => {
       return total + account.currentBalance;
     }, 0);
+
 
     return parseStringify({ data: accounts, totalBanks, totalCurrentBalance });
   } catch (error) {
