@@ -4,14 +4,17 @@ import RightSidebar from '@/components/RightSidebar'
 import TotalBalanceBox from '@/components/TotalBalanceBox'
 import { getAccount, getAccounts } from '@/lib/action/bank.actions'
 import { getLoggedInUser } from '@/lib/action/user.action'
+import { parseStringify } from '@/lib/utils'
 import React from 'react'
+
 
 const Home = async ({searchParams:{id,page}}:SearchParamProps) => {
 
   const loggedIn = await getLoggedInUser();
   const accounts = await getAccounts({userId: loggedIn?.$id});
   
-  console.log("LoggedInUser",loggedIn)
+  
+  console.log("LoggedInUser ",loggedIn)
   console.log("Here is the account Accounts",accounts)
 
   if(!loggedIn) return <div>Not logged in</div>

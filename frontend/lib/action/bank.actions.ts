@@ -23,11 +23,16 @@ export const getAccounts = async ({ userId }: getAccountsProps) => {
     const banks = await getBanks({ userId });
 
     const accounts = await Promise.all(
+      
       banks?.map(async (bank: Bank) => {
         // get each account info from plaid
+
+        let aToken = bank.accessToken;
+        
         const accountsResponse = await plaidClient.accountsGet({
-          access_token: bank.accessToken,
+          access_token: aToken,
         });
+
         const accountData = accountsResponse.data.accounts[0];
 
         // get institution info from plaid
@@ -49,22 +54,17 @@ export const getAccounts = async ({ userId }: getAccountsProps) => {
           sharaebleId: bank.shareableId,
         };
 
-        console.log("Here is the accounts getAccounts ",account );
-
         return account;
       })
     );
-
-    console.log("Here is the accounts getAccounts ",accounts );
-
 
     const totalBanks = accounts.length;
     const totalCurrentBalance = accounts.reduce((total, account) => {
       return total + account.currentBalance;
     }, 0);
 
-
     return parseStringify({ data: accounts, totalBanks, totalCurrentBalance });
+
   } catch (error) {
     console.error("An error occurred while getting the accounts:", error);
   }
