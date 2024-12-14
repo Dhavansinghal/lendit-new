@@ -27,7 +27,7 @@ export const getUserInfo = async ({ userId }: getUserInfoProps) => {
 
         return parseStringify(user.documents[0]);
     } catch (error) {
-        console.log(error)
+        console.log("getUserInfo", error)
     }
 }
 
@@ -48,6 +48,7 @@ export const signIn = async ({email,password}:signInProps ) => {
         return parseStringify(user);
 
     } catch (error) {
+        console.log("SignIN Function Issue");
         console.error(error);
     }
 };
