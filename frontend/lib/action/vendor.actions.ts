@@ -29,17 +29,16 @@ export const getVendorInfo = async ({ userId }: getUserInfoProps) => {
 }
 
 export const addVendor = async ({  ...userData }: AddVendorParams)=>{
-    const { username, usercode, mobilenumber } = userData;
-
-    let newVendorAccount;
+    const { username, usercode, mobilenumber, userId } = userData;
 
     try{
-        const { account, database } = await createAdminClient();
+        const {  database } = await createAdminClient();
 
         const newUserData = {
             username: username,
             usercode: usercode,
-            mobilenumber: mobilenumber
+            mobilenumber: mobilenumber,
+            userId:userId
         }
 
         const newUser = await database.createDocument(

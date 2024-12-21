@@ -24,6 +24,7 @@ declare type AddVendorParams = {
   username: string;
   usercode: string;
   mobilenumber?: string;
+  userId:string;
 };
 
 declare type LoginUser = {
