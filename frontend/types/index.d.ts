@@ -20,6 +20,12 @@ declare type SignUpParams = {
   password: string;
 };
 
+declare type AddVendorParams = {
+  username: string;
+  usercode: string;
+  mobilenumber?: string;
+};
+
 declare type LoginUser = {
   email: string;
   password: string;
