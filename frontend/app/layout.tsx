@@ -30,4 +30,4 @@ export default function RootLayout({
   );
 }
 
-//Add Attribute in Transaction in Appwrite | https://www.youtube.com/watch?v=PuOVqP_cjkE&t=5h09m
+//Add Vendor complete, just fix the CreatedDate issue | https://www.youtube.com/watch?v=PuOVqP_cjkE&t=5h09m

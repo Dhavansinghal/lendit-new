@@ -12,7 +12,7 @@ const {
 
   } = process.env;
 
-export const getVendorInfo = async ({ userId }: getUserInfoProps) => {
+export const getVendorInfobyId = async ({ userId }: getUserInfoProps) => {
     try {
         const { database } = await createAdminClient();
         
@@ -28,6 +28,22 @@ export const getVendorInfo = async ({ userId }: getUserInfoProps) => {
     }
 }
 
+export const getVendors = async ({userId}:getBanksProps) => {
+    try {
+        const { database } = await createAdminClient();
+        const vendors = await database.listDocuments(
+            DATABASE_ID!,
+            VENDOR_COLLECTION_ID!,
+            [Query.equal('userId', [userId])]
+        )
+
+        return parseStringify(vendors.documents);
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+
 export const addVendor = async ({  ...userData }: AddVendorParams)=>{
     const { username, usercode, mobilenumber, userId } = userData;
 
@@ -38,7 +54,8 @@ export const addVendor = async ({  ...userData }: AddVendorParams)=>{
             username: username,
             usercode: usercode,
             mobilenumber: mobilenumber,
-            userId:userId
+            userId:userId,
+            CreatedDate:Date.now()
         }
 
         const newUser = await database.createDocument(
