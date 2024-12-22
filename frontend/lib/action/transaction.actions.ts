@@ -9,24 +9,54 @@ const {
   APPWRITE_TRANSACTION_COLLECTION_ID: TRANSACTION_COLLECTION_ID,
 } = process.env;
 
-export const createTransaction = async (transaction: CreateTransactionProps) => {
+export const addTransaction = async (transaction: AddTransactionProps) => {
+  const { vendorId, gold, silver, rentMoney,rentDate,userId } = transaction;
+
   try {
     const { database } = await createAdminClient();
+
+    const rentDateF  = new Date(rentDate).toISOString();
+    const currentDate = new Date().toISOString();
+
+    const addNewTransaction = {
+      vendorId: vendorId,
+      gold: gold,
+      silver: silver,
+      userId:userId,
+      rentMoney:rentMoney,
+      rentDate:rentDateF,
+      createdDate:currentDate
+    }
 
     const newTransaction = await database.createDocument(
       DATABASE_ID!,
       TRANSACTION_COLLECTION_ID!,
       ID.unique(),
       {
-        channel: 'online',
-        category: 'Transfer',
-        ...transaction
+        ...addNewTransaction
       }
     )
 
     return parseStringify(newTransaction);
+
   } catch (error) {
     console.log(error);
+  }
+}
+
+export const getTransactions = async ({userId}:getBanksProps) => {
+  try {
+      const { database } = await createAdminClient();
+      const vendors = await database.listDocuments(
+          DATABASE_ID!,
+          TRANSACTION_COLLECTION_ID!,
+          [Query.equal('userId', [userId])]
+      )
+
+      return parseStringify(vendors.documents);
+  }
+  catch (error) {
+      console.error(error);
   }
 }
 

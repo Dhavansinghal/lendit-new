@@ -50,12 +50,14 @@ export const addVendor = async ({  ...userData }: AddVendorParams)=>{
     try{
         const {  database } = await createAdminClient();
 
+        const currentDate = new Date().toISOString();
+
         const newUserData = {
             username: username,
             usercode: usercode,
             mobilenumber: mobilenumber,
             userId:userId,
-            CreatedDate:Date.now()
+            CreatedDate:currentDate
         }
 
         const newUser = await database.createDocument(
@@ -74,3 +76,4 @@ export const addVendor = async ({  ...userData }: AddVendorParams)=>{
         console.error(error);
     }
 }
+

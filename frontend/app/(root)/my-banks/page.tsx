@@ -27,9 +27,6 @@ export default async function MyBanks () {
 
   if(!user) redirect('/SignIn');
 
-  console.log(vendors);
-
-
   return (
     <section className='home'>
       <div className='home-content'>

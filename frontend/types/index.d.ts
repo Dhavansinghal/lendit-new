@@ -297,6 +297,15 @@ declare interface CreateTransactionProps {
   email: string;
 }
 
+declare interface AddTransactionProps {
+  vendorId:string;
+  userId:string;
+  gold:number;
+  silver:number;
+  rentMoney:number;
+  rentDate: string;
+}
+
 declare interface getTransactionsByBankIdProps {
   bankId: string;
 }
