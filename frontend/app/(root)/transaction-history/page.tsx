@@ -31,7 +31,7 @@ export default async function TransactionHistory() {
       <div className='home-content'>
 
         <header className='flex items-center justify-between' >
-            <h2 className='recent-transactions-label'>Vendors</h2>
+            <h2 className='recent-transactions-label'>Transaction History</h2>
             <div>
               <TransactionForm user={user} vendors={vendors} />
 
