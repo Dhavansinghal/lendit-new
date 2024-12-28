@@ -92,7 +92,7 @@ export default async function TransactionHistory() {
               let temp = {
                 amount:transaction.rentMoney,
                 startDate:transaction.rentDate,
-                endDate: new Date().toUTCString(),
+                endDate: '2025-01-02',
                 rate:transaction.interestRate,
               };
               let interCal = calculateInterest(temp);
@@ -113,7 +113,7 @@ export default async function TransactionHistory() {
                 <TableCell>{convertNumberToMoney(transaction.rentMoney)}</TableCell>
                 <TableCell>{transaction.interestRate}%</TableCell>
                 <TableCell>{convertNumberToMoney(interCal.totalInterest)}</TableCell>
-                <TableCell>{convertNumberToMoney(interCal.totalAmount)}</TableCell>
+                <TableCell>{convertNumberToMoney((Number(interCal.totalAmount) +Number(interCal.totalInterest)))}</TableCell>
                 <TableCell>{convertNumberToMoney(assetValue)}</TableCell>
                 <TableCell>{interCal.time}</TableCell>
                 <TableCell> {transaction.isActive ?<CategoryBadge category='Given' /> :<CategoryBadge category='Returned' />}</TableCell>

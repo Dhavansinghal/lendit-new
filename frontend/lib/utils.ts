@@ -246,6 +246,7 @@ export const calculateInterest = (formData : any) => {
 
   // Calculate interest for months
   const monRate = rate / 12;
+  
   for (let i = 0; i < months; i++) {
     const inter = (tempAmount / 100) * monRate;
     totalInter += inter;
