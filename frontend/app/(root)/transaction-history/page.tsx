@@ -52,7 +52,7 @@ export default async function TransactionHistory() {
   const transactions = await getTransactions({userId: user?.userId});
   if(!user) redirect('/SignIn');
 
-  return (
+  return ( 
     <section className='home'>
       <div className='home-content'>
 
