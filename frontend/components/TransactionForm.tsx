@@ -51,6 +51,9 @@ const formSchema =  z.object({
     rentMoney: z.number().min(1,{
         message: "Please provide the amount.",
     }),
+    interestRate: z.number().min(1,{
+        message: "Please provide the Interest Rate.",
+    }),
 })
 
 
@@ -67,7 +70,8 @@ export function TransactionForm({user,vendors}:any) {
             gold:0,
             silver:0,
             rentMoney:0,
-            rentDate: ''
+            rentDate: '',
+            interestRate: 0.0
         },
     })
 
@@ -81,6 +85,7 @@ export function TransactionForm({user,vendors}:any) {
                 silver: data.silver,
                 rentMoney: data.rentMoney!,
                 rentDate: data.rentDate!,
+                interestRate: data.interestRate!,
                 userId: user.userId
             }
             const newTransaction = await addTransaction(userData);
@@ -173,6 +178,21 @@ export function TransactionForm({user,vendors}:any) {
                                                 <FormItem className="col-span-3">
                                                     <FormControl>
                                                         <Input type="number" placeholder='Please Enter Amount' {...field} onChange={(e) => field.onChange(Number(e.target.value))}  />
+                                                    </FormControl>
+                                                    <FormMessage /> 
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                    <div className="grid grid-cols-4 items-center gap-4">
+                                        <Label htmlFor="interestRate" className="text-right">Rent Money</Label>
+                                        <FormField 
+                                            control={form.control}
+                                            name='interestRate'
+                                            render={({field}) =>(
+                                                <FormItem className="col-span-3">
+                                                    <FormControl>
+                                                        <Input type="number" placeholder='Please Enter Interest Rate' {...field} onChange={(e) => field.onChange(Number(e.target.value))}  />
                                                     </FormControl>
                                                     <FormMessage /> 
                                                 </FormItem>

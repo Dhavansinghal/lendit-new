@@ -110,6 +110,30 @@ export const transactionCategoryStyles = {
     textColor: "text-success-700",
     chipBackgroundColor: "bg-inherit",
   },
+  Given:{
+    borderColor: "border-[#175cd3]",
+    backgroundColor: "bg-blue-500",
+    textColor: "text-blue-700",
+    chipBackgroundColor: "bg-inherit",
+  },
+  Returned :{
+    borderColor: "border-success-600",
+    backgroundColor: "bg-green-600",
+    textColor: "text-success-700",
+    chipBackgroundColor: "bg-inherit",
+  },
+  Underpaid :{
+    borderColor: "border-success-600",
+    backgroundColor: "bg-green-600",
+    textColor: "text-success-700",
+    chipBackgroundColor: "bg-inherit",
+  },
+  Overpaid: {
+    borderColor: "border-red-700",
+    backgroundColor: "bg-red-700",
+    textColor: "text-red-700",
+    chipBackgroundColor: "bg-inherit",
+  },
   Transfer: {
     borderColor: "border-red-700",
     backgroundColor: "bg-red-700",

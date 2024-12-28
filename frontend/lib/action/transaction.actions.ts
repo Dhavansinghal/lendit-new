@@ -10,7 +10,7 @@ const {
 } = process.env;
 
 export const addTransaction = async (transaction: AddTransactionProps) => {
-  const { vendorId, gold, silver, rentMoney,rentDate,userId } = transaction;
+  const { vendorId, gold, silver, rentMoney,rentDate,userId,interestRate } = transaction;
 
   try {
     const { database } = await createAdminClient();
@@ -25,6 +25,7 @@ export const addTransaction = async (transaction: AddTransactionProps) => {
       userId:userId,
       rentMoney:rentMoney,
       rentDate:rentDateF,
+      interestRate:interestRate,
       createdDate:currentDate
     }
 

@@ -304,6 +304,7 @@ declare interface AddTransactionProps {
   silver:number;
   rentMoney:number;
   rentDate: string;
+  interestRate:number;
 }
 
 declare interface getTransactionsByBankIdProps {
