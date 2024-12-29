@@ -25,31 +25,13 @@ import { Button } from '@/components/ui/button';
 export default async function TransactionHistory() {
   const appwriteItemId = 456;
 
-  const goldPrice = 7500;
-  const silverPrice = 8500;
-
-  // const [goldPrice, setGoldPrice] = useState<number | 1>(1);
-  // const [silverPrice, setSilverPrice] = useState<number | 1>(1);
-
-  // useEffect(() => {
-  //   const fetchPrices = async () => {
-  //     try {
-  //       const { goldPrice, silverPrice } = await fetchMetalsPrices();
-  //       setGoldPrice(goldPrice); 
-  //       setSilverPrice(silverPrice);  
-  //     } catch (err) {
-        
-  //     } finally {
-        
-  //     }
-  //   };
-  //   fetchPrices();
-  // }, []);
-
-
   const user = await getLoggedInUser();
   const vendors = await getVendors({userId: user?.userId});
-  const transactions = await getTransactions({userId: user?.userId});
+  const { transactions, metal } : any  = await getTransactions({userId: user?.userId});
+
+  const { goldPrice, silverPrice, timestamp}  = metal;
+
+
   if(!user) redirect('/SignIn');
 
   return ( 
@@ -66,6 +48,7 @@ export default async function TransactionHistory() {
               </Link>
             </div>
         </header>
+        <div>{String(new Date(timestamp))}</div>
 
         <Table>
           <TableCaption>A list of your recent Transactions.</TableCaption>

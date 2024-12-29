@@ -2,7 +2,7 @@
 
 import { ID, Query } from "node-appwrite";
 import { createAdminClient } from "../appwrite";
-import { parseStringify } from "../utils";
+import { fetchMetalsPrices, parseStringify } from "../utils";
 
 const {
   APPWRITE_DATABASE_ID: DATABASE_ID,
@@ -48,13 +48,22 @@ export const addTransaction = async (transaction: AddTransactionProps) => {
 export const getTransactions = async ({userId}:getBanksProps) => {
   try {
       const { database } = await createAdminClient();
+  
+
       const vendors = await database.listDocuments(
           DATABASE_ID!,
           TRANSACTION_COLLECTION_ID!,
           [Query.equal('userId', [userId])]
       )
 
-      return parseStringify(vendors.documents);
+      const values =  await fetchMetalsPrices();
+      const returnData = {
+        metal : values,
+        transactions:parseStringify(vendors.documents)
+      }
+
+
+      return returnData;
   }
   catch (error) {
       console.error(error);
