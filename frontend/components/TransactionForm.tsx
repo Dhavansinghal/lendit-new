@@ -147,7 +147,7 @@ export function TransactionForm({user,vendors}:any) {
                                             render={({field}) =>(
                                                 <FormItem className="col-span-3">
                                                     <FormControl>
-                                                        <Input type="number" placeholder='Please Enter Gold in Gm' {...field}  onChange={(e) => field.onChange(Number(e.target.value))} />
+                                                        <Input type="number" placeholder='Please Enter Gold in Gm' {...field}  onChange={(e) => e.target.value =='' ? field.onChange(e.target.value) :  field.onChange(Number(e.target.value))} />
                                                     </FormControl>
                                                     <FormMessage /> 
                                                 </FormItem>
@@ -162,7 +162,7 @@ export function TransactionForm({user,vendors}:any) {
                                             render={({field}) =>(
                                                 <FormItem className="col-span-3">
                                                     <FormControl>
-                                                        <Input type="number"   placeholder='Please Enter Silver in Gm' {...field} onChange={(e) => field.onChange(Number(e.target.value))}   />
+                                                        <Input type="number"   placeholder='Please Enter Silver in Gm' {...field} onChange={(e) => e.target.value =='' ? field.onChange(e.target.value) :  field.onChange(Number(e.target.value))}   />
                                                     </FormControl>
                                                     <FormMessage /> 
                                                 </FormItem>
@@ -177,7 +177,7 @@ export function TransactionForm({user,vendors}:any) {
                                             render={({field}) =>(
                                                 <FormItem className="col-span-3">
                                                     <FormControl>
-                                                        <Input type="number" placeholder='Please Enter Amount' {...field} onChange={(e) => field.onChange(Number(e.target.value))}  />
+                                                        <Input type="number" placeholder='Please Enter Amount' {...field} onChange={(e) => e.target.value =='' ? field.onChange(e.target.value) :  field.onChange(Number(e.target.value))}  />
                                                     </FormControl>
                                                     <FormMessage /> 
                                                 </FormItem>
@@ -185,14 +185,14 @@ export function TransactionForm({user,vendors}:any) {
                                         />
                                     </div>
                                     <div className="grid grid-cols-4 items-center gap-4">
-                                        <Label htmlFor="interestRate" className="text-right">Rent Money</Label>
+                                        <Label htmlFor="interestRate" className="text-right">Interest Rate</Label>
                                         <FormField 
                                             control={form.control}
                                             name='interestRate'
                                             render={({field}) =>(
                                                 <FormItem className="col-span-3">
                                                     <FormControl>
-                                                        <Input type="number" placeholder='Please Enter Interest Rate' {...field} onChange={(e) => field.onChange(Number(e.target.value))}  />
+                                                        <Input type="number" placeholder='Please Enter Interest Rate' {...field} onChange={(e) => e.target.value =='' ? field.onChange(e.target.value) :  field.onChange(Number(e.target.value))}  />
                                                     </FormControl>
                                                     <FormMessage /> 
                                                 </FormItem>
