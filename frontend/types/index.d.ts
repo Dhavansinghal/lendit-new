@@ -71,6 +71,7 @@ declare type Account = {
 };
 
 declare type Transaction = {
+  $id?: string;
   vendorId: string;
   status?: string;
   rentDate: date;
@@ -223,6 +224,12 @@ declare interface FooterProps {
 declare interface Transactions {
   transaction : Transaction;
 }
+
+declare interface TransactionReturnFormProps {
+  transaction : Transaction;
+  transactionId : string;
+}
+
 declare interface RightSidebarProps {
   user: User;
   transactions: Transaction[];

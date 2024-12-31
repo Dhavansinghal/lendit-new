@@ -2,7 +2,7 @@
 
 import { ID, Query } from "node-appwrite";
 import { createAdminClient } from "../appwrite";
-import { calculateInterest, convertNumberToMoney, fetchMetalsPrices, formatDateToDisplay, parseStringify } from "../utils";
+import { calculateInterest, fetchMetalsPrices, parseStringify } from "../utils";
 
 const {
   APPWRITE_DATABASE_ID: DATABASE_ID,
@@ -50,7 +50,7 @@ export const getTransactions = async ({userId}:getBanksProps) => {
       const { database } = await createAdminClient();
   
 
-      const vendors = await database.listDocuments(
+      const transactions = await database.listDocuments(
           DATABASE_ID!,
           TRANSACTION_COLLECTION_ID!,
           [Query.equal('userId', [userId])]
@@ -59,7 +59,7 @@ export const getTransactions = async ({userId}:getBanksProps) => {
       const values =  await fetchMetalsPrices();
       const returnData = {
         metal : values,
-        transactions:parseStringify(vendors.documents)
+        transactions:parseStringify(transactions.documents)
       }
 
 
@@ -67,6 +67,28 @@ export const getTransactions = async ({userId}:getBanksProps) => {
   }
   catch (error) {
       console.error(error);
+  }
+}
+
+export const returnTransactionByTransactionId = async ({transactionId}: any) => {
+  try {
+    const { database } = await createAdminClient();
+
+    let tt = '67700322000c990e47c9';
+    console.log("checking transactionId",tt);
+    console.log("checking transactionId",transactionId);
+
+    const returnResult = await database.updateDocument(
+      DATABASE_ID!,
+      TRANSACTION_COLLECTION_ID!,
+      tt,
+      {isActive:false}
+    )
+
+    return parseStringify(returnResult);
+
+  } catch (error) {
+    console.log('Return Transaction issue :',error);
   }
 }
 
@@ -123,6 +145,7 @@ const refineTransactions = async ({metal, transactions}: any) => {
     status = transaction.isActive ? status : 'Returned';
 
     returnTransactions.push({
+        $id: transaction.$id,
         vendorId:transaction.vendorId,
         status,
         rentDate: transaction.rentDate,
