@@ -70,18 +70,14 @@ export const getTransactions = async ({userId}:getBanksProps) => {
   }
 }
 
-export const returnTransactionByTransactionId = async ({transactionId}: any) => {
+export const returnTransactionByTransactionId = async (transactionId: string) => {
   try {
     const { database } = await createAdminClient();
-
-    let tt = '67700322000c990e47c9';
-    console.log("checking transactionId",tt);
-    console.log("checking transactionId",transactionId);
 
     const returnResult = await database.updateDocument(
       DATABASE_ID!,
       TRANSACTION_COLLECTION_ID!,
-      tt,
+      transactionId,
       {isActive:false}
     )
 

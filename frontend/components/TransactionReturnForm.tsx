@@ -1,6 +1,32 @@
 'use client'
 
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import {z} from 'zod'
 import { Button } from "@/components/ui/button"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage
+} from "@/components/ui/form"
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+  } from "@/components/ui/select"
 
 import {
     AlertDialog,
@@ -29,18 +55,20 @@ export function TransactionReturnForm({transaction,transactionId}: TransactionRe
     const [IsOpen, setIsOpen] = useState(false);
     const [IsLoading,setIsLoading] = useState(false);
 
-    async function formFunctionFucked () {
-        if(transaction){
-            console.log('checking', transaction);
-            console.log('checking', transactionId);
+    function formFunctionFucked () {
+        
+        return   new Promise((resolve, reject) => {
+                    if(transaction){
+                        
+                        const result = returnTransactionByTransactionId(transactionId);
 
-            const result = await returnTransactionByTransactionId(transactionId);
-            console.log(result); 
-        }
-        else {
-            console.log(transaction);
-           
-        }
+                        resolve(transaction); 
+                    }
+                    else {
+                        // console.log(transaction);
+                        reject(transaction); 
+                    }
+                });
     }
 
     return (
@@ -59,8 +87,7 @@ export function TransactionReturnForm({transaction,transactionId}: TransactionRe
                     <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
                         <AlertDialogAction onClick={(event) => {
-							formFunctionFucked();
-							setIsOpen(false);
+							formFunctionFucked().then(() => setIsOpen(false));
 							event.preventDefault();
 						}} className='add-new-vendor-btn bg-bank-gradient'>Returned</AlertDialogAction>
                     </AlertDialogFooter>
