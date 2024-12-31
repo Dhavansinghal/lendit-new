@@ -62,7 +62,7 @@ export function TransactionReturnForm({transaction,transactionId}: TransactionRe
                         
                         const result = returnTransactionByTransactionId(transactionId);
 
-                        resolve(transaction); 
+                        resolve(result); 
                     }
                     else {
                         // console.log(transaction);
