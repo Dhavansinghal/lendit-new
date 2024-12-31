@@ -10,7 +10,6 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-import Link from 'next/link';
 
 import TransactionForm from '@/components/TransactionForm';
 import { getLoggedInUser } from '@/lib/action/user.action';
@@ -18,15 +17,15 @@ import { redirect } from 'next/navigation';
 import { getVendors } from '@/lib/action/vendor.actions';
 import { getTransactions } from '@/lib/action/transaction.actions';
 import CategoryBadge from '@/components/CategoryBadge';
-import { calculateInterest, formatDateToDisplay, fetchMetalsPrices, convertNumberToMoney } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
+import TransactionReturnForm from '@/components/TransactionReturnForm';
+import { convertNumberToMoney, formatDateToDisplay } from '@/lib/utils';
 
 
 export default async function TransactionHistory() {
-  const appwriteItemId = 456;
 
   const user = await getLoggedInUser();
   const vendors = await getVendors({userId: user?.userId});
+
   const { transactions, metal } : any  = await getTransactions({userId: user?.userId});
 
   const { goldPrice, silverPrice, timestamp}  = metal;
@@ -43,9 +42,9 @@ export default async function TransactionHistory() {
             <div>
               <TransactionForm user={user} vendors={vendors} />
 
-              <Link href={`/transactions/?id=${appwriteItemId}`} className='view-all-btn ml-5'>
+              {/* <Link href={`/transactions/?id=${appwriteItemId}`} className='view-all-btn ml-5'>
                   View All
-              </Link>
+              </Link> */}
             </div>
         </header>
         <div>{String(new Date(timestamp))}</div>
@@ -71,37 +70,23 @@ export default async function TransactionHistory() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {transactions!.map((transaction:any, index:string) =>{
-              let temp = {
-                amount:transaction.rentMoney,
-                startDate:transaction.rentDate,
-                endDate: '2025-01-02',
-                rate:transaction.interestRate,
-              };
-              let interCal = calculateInterest(temp);
-
-              let assetValue = (goldPrice*transaction.gold) + (silverPrice*transaction.silver);
-              let difference = Number(assetValue) -  Number(interCal.totalAmount);
-
-              let status = Number(difference) >= 0 ? 'Underpaid':'Overpaid' ;
-              status = transaction.isActive ? status : 'Returned';
-
+            {transactions!.map((transaction:Transaction, index:string) =>{
               return (
               <TableRow key={index} >
                 <TableCell className="font-medium">{transaction.vendorId}</TableCell>
-                <TableCell><CategoryBadge category={status} /> </TableCell>
+                <TableCell><CategoryBadge category={transaction?.status || ''} /> </TableCell>
                 <TableCell>{formatDateToDisplay(transaction.rentDate)}</TableCell>
-                <TableCell>{transaction.gold} ({convertNumberToMoney(goldPrice*transaction.gold)})</TableCell>
-                <TableCell>{transaction.silver} {convertNumberToMoney(silverPrice*transaction.silver)})</TableCell>
+                <TableCell>{transaction.gold} ({convertNumberToMoney(transaction?.goldCurrentPrice)})</TableCell>
+                <TableCell>{transaction.silver} ({convertNumberToMoney(transaction.silverCurrentPrice)})</TableCell>
                 <TableCell>{convertNumberToMoney(transaction.rentMoney)}</TableCell>
                 <TableCell>{transaction.interestRate}%</TableCell>
-                <TableCell>{convertNumberToMoney(interCal.totalInterest)}</TableCell>
-                <TableCell>{convertNumberToMoney((Number(interCal.totalAmount) +Number(interCal.totalInterest)))}</TableCell>
-                <TableCell>{convertNumberToMoney(assetValue)}</TableCell>
-                <TableCell>{interCal.time}</TableCell>
+                <TableCell>{convertNumberToMoney(transaction.totalInterest)}</TableCell>
+                <TableCell>{convertNumberToMoney(transaction.finalAmount)}</TableCell>
+                <TableCell>{convertNumberToMoney(transaction.assetValue)}</TableCell>
+                <TableCell>{transaction.interestTime}</TableCell>
                 <TableCell> {transaction.isActive ?<CategoryBadge category='Given' /> :<CategoryBadge category='Returned' />}</TableCell>
                 <TableCell className="text-right">{formatDateToDisplay(transaction.createdDate)}</TableCell>
-                <TableCell><Button className="shadcn-button bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-1 px-2 border border-green-500 hover:border-transparent rounded-lg " variant="outline">Returned</Button></TableCell>
+                <TableCell><TransactionReturnForm transaction={transaction} /></TableCell>
               </TableRow>
             )})}
           </TableBody>

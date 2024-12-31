@@ -2,7 +2,7 @@
 
 import { ID, Query } from "node-appwrite";
 import { createAdminClient } from "../appwrite";
-import { fetchMetalsPrices, parseStringify } from "../utils";
+import { calculateInterest, convertNumberToMoney, fetchMetalsPrices, formatDateToDisplay, parseStringify } from "../utils";
 
 const {
   APPWRITE_DATABASE_ID: DATABASE_ID,
@@ -63,7 +63,7 @@ export const getTransactions = async ({userId}:getBanksProps) => {
       }
 
 
-      return returnData;
+      return refineTransactions(returnData);
   }
   catch (error) {
       console.error(error);
@@ -98,4 +98,54 @@ export const getTransactionsByBankId = async ({bankId}: getTransactionsByBankIdP
   } catch (error) {
     console.log(error);
   }
+}
+
+const refineTransactions = async ({metal, transactions}: any) => {
+  const { goldPrice, silverPrice}  = metal;
+  var returnTransactions : any = [];
+
+  transactions!.map((transaction:any, index:string) =>{
+    let temp = {
+      amount:transaction.rentMoney,
+      startDate:transaction.rentDate,
+      endDate: new Date().toUTCString(),
+      rate:transaction.interestRate,
+    };
+    let interCal = calculateInterest(temp);
+
+    let goldCurrentPrice = goldPrice*transaction.gold;
+    let silverCurrentPrice = silverPrice*transaction.silver;
+
+    let assetValue = goldCurrentPrice + silverCurrentPrice;
+    let difference = Number(assetValue) -  Number(interCal.totalAmount);
+
+    let status = Number(difference) >= 0 ? 'Underpaid':'Overpaid' ;
+    status = transaction.isActive ? status : 'Returned';
+
+    returnTransactions.push({
+        vendorId:transaction.vendorId,
+        status,
+        rentDate: transaction.rentDate,
+        gold : transaction.gold,
+        silver: transaction.silver,
+        goldCurrentPrice : Number(goldCurrentPrice),
+        silverCurrentPrice : Number(silverCurrentPrice),
+        rentMoney : Number(transaction.rentMoney),
+        interestRate : transaction.interestRate,
+        totalInterest : Number(interCal.totalInterest),
+        finalAmount : Number((Number(interCal.totalAmount) +Number(interCal.totalInterest))),
+        assetValue : Number(assetValue),
+        interestTime : interCal.time,
+        isActive: transaction.isActive,
+        createdDate : transaction.createdDate
+    })
+  })
+  
+  const returnData = {
+    metal ,
+    transactions: returnTransactions
+  }
+
+
+  return returnData;
 }

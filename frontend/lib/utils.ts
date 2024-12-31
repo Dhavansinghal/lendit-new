@@ -272,8 +272,9 @@ export const calculateInterest = (formData : any) => {
 
 }
 
-export const convertNumberToMoney = (money:Number) =>{
-  const returnMoney = (money).toLocaleString('en-IN',  {
+export const convertNumberToMoney = (money?:Number) =>{
+  var moneyValue = money || 0
+  const returnMoney = (moneyValue).toLocaleString('en-IN',  {
           maximumFractionDigits: 0,style: 'currency',
           currency: 'INR',
         });

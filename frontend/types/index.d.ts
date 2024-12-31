@@ -71,22 +71,21 @@ declare type Account = {
 };
 
 declare type Transaction = {
-  id: string;
-  $id: string;
-  name: string;
-  paymentChannel: string;
-  type: string;
-  accountId: string;
-  amount: number;
-  pending: boolean;
-  category: string;
-  date: string;
-  image: string;
-  type: string;
-  $createdAt: string;
-  channel: string;
-  senderBankId: string;
-  receiverBankId: string;
+  vendorId: string;
+  status?: string;
+  rentDate: date;
+  gold: string;
+  goldCurrentPrice?: Number;
+  silver: string;
+  silverCurrentPrice?: Number;
+  rentMoney: Number;
+  interestRate: string;
+  totalInterest?: Number;
+  finalAmount?: Number;
+  assetValue?: Number;
+  interestTime?: string;
+  isActive: boolean;
+  createdDate: string;
 };
 
 declare type Bank = {
@@ -221,6 +220,9 @@ declare interface FooterProps {
   type?: "mobile" | "desktop";
 }
 
+declare interface Transactions {
+  transaction : Transaction;
+}
 declare interface RightSidebarProps {
   user: User;
   transactions: Transaction[];
