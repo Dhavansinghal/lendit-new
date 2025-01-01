@@ -160,6 +160,7 @@ declare interface HeaderBoxProps {
   type?: "title" | "greeting";
   title: string;
   subtext: string;
+  subtext2: string;
   user?: string;
 }
 
@@ -211,7 +212,7 @@ declare interface BankTabItemProps {
 }
 
 declare interface TotlaBalanceBoxProps {
-  accounts: Account[];
+  transactions: Transaction[];
   totalBanks: number;
   totalCurrentBalance: number;
 }
@@ -265,7 +266,7 @@ declare interface CategoryProps {
 }
 
 declare interface DoughnutChartProps {
-  accounts: Account[];
+  transactions: Transaction[];
 }
 
 declare interface PaymentTransferFormProps {

@@ -34,7 +34,7 @@ const RightSidebar = ({user,transactions,banks}:RightSidebarProps) => {
                 alt="plus"
               />
               <h2 className='text-14 font-semibold text-gray-400'>
-                Add Banks
+                Add Vendor
               </h2>
             </Link>
           </div>
@@ -45,7 +45,7 @@ const RightSidebar = ({user,transactions,banks}:RightSidebarProps) => {
                 <BankCard
                   key={banks[0].$id}
                   account={banks[0]}
-                  userName={user?.name}
+                  userName={user?.name || 'Dhavan'}
                   showBalance={false}
                 />
               </div>
@@ -54,7 +54,7 @@ const RightSidebar = ({user,transactions,banks}:RightSidebarProps) => {
                   <BankCard
                     key={banks[0].$id}
                     account={banks[0]}
-                    userName={user?.name}
+                    userName={user?.name || 'Dhavan'}
                     showBalance={false}
                   />
                 </div>

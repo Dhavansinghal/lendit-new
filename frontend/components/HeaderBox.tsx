@@ -1,4 +1,4 @@
-export const HeaderBox = ({ type ='title',title,subtext,user} : HeaderBoxProps) => {
+export const HeaderBox = ({ type ='title',title,subtext,user,subtext2} : HeaderBoxProps) => {
   return (
     <div className="header-box">
         <h1 className="header-box-title">
@@ -10,6 +10,7 @@ export const HeaderBox = ({ type ='title',title,subtext,user} : HeaderBoxProps) 
             )}
         </h1>
         <p className="header-box-subtext">{subtext}</p>
+        <p className="header-box-subtext2">{subtext2}</p>
     </div>
   )
 }

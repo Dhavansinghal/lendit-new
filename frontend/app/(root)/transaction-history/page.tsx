@@ -85,7 +85,7 @@ export default async function TransactionHistory() {
                 <TableCell>{transaction.interestTime}</TableCell>
                 <TableCell> {transaction.isActive ?<CategoryBadge category='Given' /> :<CategoryBadge category='Returned' />}</TableCell>
                 <TableCell className="text-right">{formatDateToDisplay(transaction.createdDate)}</TableCell>
-                <TableCell><TransactionReturnForm transaction={transaction} transactionId={transaction.$id} /></TableCell>
+                <TableCell>{transaction.isActive ?<TransactionReturnForm transaction={transaction} transactionId={transaction?.$id || ''} /> : ''}</TableCell>
               </TableRow>
             )})}
           </TableBody>

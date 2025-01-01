@@ -6,17 +6,17 @@ import { Doughnut } from 'react-chartjs-2';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 
-const DoughnutChart = ({accounts}:DoughnutChartProps) => {
+const DoughnutChart = ({totalTransaction}:any) => {
   
   const data = {
     datasets: [
       {
-        label: 'Banks',
-        data: [1250,2500,3750],
-        backgroundColor: ['#747b6','#2265d8','#2f91fa']
+        label: 'Type',
+        data: [totalTransaction.underpaidTotal,totalTransaction.overpaidTotal],
+        backgroundColor: ['#2265d8','#2f91fa']
       },
     ],
-    labels:['Bank 1','Bank 2','Bank 3']
+    labels:['Underpaid','Overpaid']
   };
 
   return (

@@ -110,15 +110,15 @@
   }
 
   .home-content {
-    @apply no-scrollbar flex w-full flex-1 flex-col gap-8 px-5 sm:px-8 py-7 lg:py-12 xl:max-h-screen xl:overflow-y-scroll;
+    @apply no-scrollbar w-full flex-1 flex-col gap-8 px-5 sm:px-8 py-7 lg:py-12 xl:max-h-screen xl:overflow-y-scroll;
   }
 
   .home-header {
-    @apply flex flex-col justify-between gap-8;
+    @apply justify-between gap-8;
   }
 
   .total-balance {
-    @apply flex w-full items-center gap-4 rounded-xl border border-gray-200 p-4 shadow-chart sm:gap-6 sm:p-6;
+    @apply flex w-[47%] float-start m-2 gap-4 rounded-xl border border-gray-200 p-4 shadow-chart sm:gap-6 sm:p-6;
   }
 
   .total-balance-chart {
@@ -213,7 +213,7 @@
   }
 
   .header-box {
-    @apply flex flex-col gap-1;
+    @apply flex flex-col gap-1 mb-10;
   }
 
   .header-box-title {
@@ -222,6 +222,10 @@
 
   .header-box-subtext {
     @apply text-14 lg:text-16 font-normal text-gray-600;
+  }
+
+  .header-box-subtext2 {
+    @apply text-14 lg:text-12 font-normal text-gray-600;
   }
 
   /* Bank Card */

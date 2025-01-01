@@ -1,8 +1,9 @@
+import DashboardCard from '@/components/DashboardCard'
 import { HeaderBox } from '@/components/HeaderBox'
 import RecentTransactions from '@/components/RecentTransactions'
 import RightSidebar from '@/components/RightSidebar'
 import TotalBalanceBox from '@/components/TotalBalanceBox'
-import { getAccount, getAccounts } from '@/lib/action/bank.actions'
+import { getTransactionDashboard } from '@/lib/action/transaction.actions'
 import { getLoggedInUser } from '@/lib/action/user.action'
 import { parseStringify } from '@/lib/utils'
 import React from 'react'
@@ -11,23 +12,10 @@ import React from 'react'
 const Home = async ({searchParams:{id,page}}:SearchParamProps) => {
 
   const loggedIn = await getLoggedInUser();
-  const accounts = await getAccounts({userId: loggedIn?.$id});
+  const {metal, transactions, totalTransaction }:any = await getTransactionDashboard({userId: loggedIn?.userId});
   
-  
-  console.log("LoggedInUser ",loggedIn)
-  console.log("Here is the account Accounts",accounts)
-
   if(!loggedIn) return <div>Not logged in</div>
-  if(!accounts) return <div>No accounts</div>
-
-  const accountData = accounts?.data;
-  const appwriteItemId = (id as string) || accountData[0]?.appwriteItemId;
-
-  const account = await getAccount({appwriteItemId});
-
-  const currentPage = Number(page as string) || 1;
-  
-  console.log("New Account alert",account)
+  if(!transactions) return <div>No Transaction</div>
 
   return (
     <section className='home'>
@@ -37,27 +25,75 @@ const Home = async ({searchParams:{id,page}}:SearchParamProps) => {
             type='greeting'
             title='Welcome'
             user={loggedIn?.firstName || 'Guest'}
-            subtext = "Access and Manage Accounts"
+            subtext = "Access and Manage Money"
+            subtext2 ={"Last Metal Price Updated :" + metal.timestamp}
           />
 
-          <TotalBalanceBox 
-            accounts={accountData}
-            totalBanks={accounts?.totalBanks}
-            totalCurrentBalance={accounts?.totalCurrentBalance}
-          />
+          {/* <TotalBalanceBox 
+            totalTransaction={totalTransaction}
+          /> */}
         </header>
+        
+        {/* <TotalBalanceBox 
+            totalTransaction={totalTransaction}
+          /> */}
 
-        <RecentTransactions 
-          accounts={accountData}
-          totalBanks={accounts?.totalBanks}
-          appwriteItemId={appwriteItemId}
-          page={currentPage}
+        <DashboardCard 
+          amount={metal.goldPrice}
+          image="gold"
+          title="Current Gold Value"
         />
+        <DashboardCard 
+          amount={metal.silverPrice}
+          image="silver"
+          title="Current Silver Value"
+        />
+
+        <DashboardCard 
+          amount={totalTransaction.goldCurrentPriceTotal}
+          image="gold"
+          title="Gold hold value"
+        />
+        <DashboardCard 
+          amount={totalTransaction.silverCurrentPriceTotal}
+          image="silver"
+          title="Silver Hold value"
+        />
+
+        <DashboardCard 
+          amount={totalTransaction.underpaidTotal}
+          image="time"
+          title="Total Underpaid"
+        />
+        <DashboardCard 
+          amount={totalTransaction.overpaidTotal}
+          image="time"
+          title="Total Overpaid"
+        />
+
+        <DashboardCard 
+          amount={totalTransaction.rentMoneyTotal}
+          image="time"
+          title="Total Rent Money"
+        />
+        <DashboardCard 
+          amount={totalTransaction.totalInterestTotal}
+          image="gold"
+          title="Current Interest Value"
+        />
+
+
+goldTotal : 0,
+    silverTotal: 0,
+    finalAmountTotal : 0,
+    assetValueTotal : 0,
+
       </div>
+
       <RightSidebar
         user={loggedIn}
-        transactions={accounts?.transaction}
-        banks={accountData?.slice(0,2)}
+        transactions={[]}
+        banks={[{},{}]}
       />
 
     </section>

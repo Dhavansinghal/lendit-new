@@ -13,7 +13,7 @@ const BankCard = ({account,userName,showBalance = true}:CreditCardProps) => {
                         {account.name || userName}
                     </h1>
                     <p className='font-ibm-plex-serif font-black text-white'>
-                        {formatAmount(account.currentBalance)}
+                        {formatAmount(0) }
                     </p>
                 </div>
 
