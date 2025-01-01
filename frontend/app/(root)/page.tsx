@@ -78,15 +78,33 @@ const Home = async ({searchParams:{id,page}}:SearchParamProps) => {
         />
         <DashboardCard 
           amount={totalTransaction.totalInterestTotal}
-          image="gold"
+          image="time"
           title="Current Interest Value"
         />
 
+        <DashboardCard 
+          amount={totalTransaction.finalAmountTotal}
+          image="time"
+          title="Final Amount"
+        />
+         <DashboardCard 
+          amount={totalTransaction.assetValueTotal}
+          image="time"
+          title="Total Assets Value"
+        />
 
-goldTotal : 0,
-    silverTotal: 0,
-    finalAmountTotal : 0,
-    assetValueTotal : 0,
+        <DashboardCard 
+          amount={totalTransaction.goldTotal}
+          image="gold"
+          title="Total Gold"
+        />
+
+        <DashboardCard 
+          amount={totalTransaction.silverTotal}
+          image="silver"
+          title="Total Silver"
+        />
+
 
       </div>
 
